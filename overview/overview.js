@@ -36,7 +36,8 @@
     const cap = a?.getAttribute('data-title') || img?.getAttribute('alt') || '';
     const el  = a || img;
     return src ? { el, src, cap } : null;
-  }).filter(Boolean);
+　　}).filter(it => it && it.src);
+
 
   // data-index を付与（委譲で拾う）
   images.forEach((info, i) => {
