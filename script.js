@@ -5,6 +5,27 @@
    - Simple viewer (#simple-viewer)
    - Draggable .icon with click suppression
    ========================================= */
+(function() {
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  // Instagramアプリ内ブラウザを検出
+  const isInstagram = /Instagram/i.test(ua);
+
+  if (isInstagram) {
+    // 現在のURLをそのまま外部ブラウザで開く
+    const current = window.location.href;
+
+    // iPhone / iPad → Safariで開く
+    if (/iPhone|iPad|iPod/i.test(ua)) {
+      window.location = 'x-web-search://?' + encodeURIComponent(current);
+    }
+
+    // Android → Chromeなどで開く
+    else if (/Android/i.test(ua)) {
+      window.location = 'intent://' + current.replace(/^https?:\/\//, '') +
+                        '#Intent;scheme=https;package=com.android.chrome;end';
+    }
+  }
+})();
 
 (() => {
 
