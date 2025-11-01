@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Desktop</title>
+
+  <!-- CSS -->
+  <link rel="preconnect" href="https://use.typekit.net" crossorigin>
+  <link rel="preconnect" href="https://p.typekit.net" crossorigin>
+  <link rel="stylesheet" href="https://use.typekit.net/tar7poy.css">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- （GLightbox 削除済み） -->
+</head>
+<body>
+
+   <!--  <video class="bg-video" src="video/bg.mp4" autoplay muted playsinline loop></video> -->
+
+  <!-- ================= Desktop ================= -->
+  <div class="desktop" id="desktop">
+
+    <!-- Simple image viewer -->
+     <button class="icon" data-type="simple-view" data-src="./credits/credits_snippet.html"
+      style="left: 68vw; top: 60vh;">
+      <img src="icons/52.webp" alt="Credits" draggable="false">
+      <span class="label">credits.txt</span>
+    </button>
+  
+  
+    <!-- Mail -->
+   <button class="icon mail"
+        onclick="location.href='mailto:natsukimua@gmail.com'"
+        style="left:72vw; top:48vh;"
+        aria-label="Email Natsuki">
+    <svg viewBox="0 0 24 24" aria-hidden="true" width="32" height="32">
+    <path fill="currentColor"
+          d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6zm2 0v.01l8 5 8-5V6H4zm16 12V8.24l-7.45 4.65a1 1 0 0 1-1.1 0L4 8.24V18h16z"/>
+    </svg>
+    <span class="label">Mail</span>
+  </button>
+
+<!-- Instagram -->
+<button class="icon insta"
+        onclick="window.open('https://www.instagram.com/natsukimua/', '_blank')"
+        style="left:60vw; top:40vh;"
+        aria-label="Instagram">
+  <svg viewBox="0 0 24 24" aria-hidden="true" width="32" height="32">
+    <path fill="currentColor"
+          d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 2.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5-1.25a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5z"/>
+  </svg>
+  <span class="label">Instagram</span>
+</button>
+
+
+
+
+     <button class="icon" data-type="simple-view" data-src="video/v01.mp4" style="left: 14vw; top: 26vh;">
+     <img src="icons/51.webp" alt="Sample" draggable="false">
+     <span class="label">GIVENCHY HOMME.mp4</span>
+     </button>
+
+      <button class="icon" data-type="simple-view" data-src="img08/33.webp" style="left: 34vw; top: 26vh;">
+      <img src="icons/33.webp" alt="Sample" draggable="false">
+      <span class="label">body.webp</span>
+    </button>
+      <button class="icon" data-type="simple-view" data-src="img08/50.webp" style="left: 70vw; top: 26vh;">
+      <img src="icons/50.webp" alt="Sample" draggable="false">
+      <span class="label">lip.webp</span>
+    </button>
+        <button class="icon" data-type="simple-view" data-src="img08/17.webp" style="left: 20vw; top: 38vh;">
+      <img src="icons/17.webp" alt="Sample" draggable="false">
+      <span class="label">beauty.webp</span>
+    </button>
+
+
+
+
+
+
+
+
+    <!-- project -->
+    <button class="icon" data-type="overview" style="left: 30vw; top: 45vh;">
+      <img src="icons/09.webp" alt="Overview" draggable="false">
+      <span class="label">WORK (selected)</span>
+    </button>
+
+    <!-- Lightbox gallery -->
+    <button class="icon" data-action="gallery"
+      data-images="img08/05.webp|Look 1, img08/06.webp|Look 2, img08/07.webp|Backstage,img08/08.webp|Backstage"
+      style="left: 40vw; top: 40vh;">
+      <img src="icons/30.webp" alt="Project" draggable="false">
+      <span class="label">gallery</span>
+    </button>
+
+   <button class="icon icon-large"
+    data-action="link"
+    data-href="scrubber/scrubber.html"
+    data-target="_blank"
+    style="left: 50vw; top: 50vh;"
+    aria-label="Open Scrubber">
+    <img src="icons/10.webp" alt="Scrubber" draggable="false">
+    <span class="label">scrubber.html</span>
+   </button>
+    <button class="icon icon-large"
+    data-action="link"
+    data-href="./overview/overview.html"
+    data-target="_blank"
+    style="left: 70vw; top: 50vh;"
+    aria-label="Open Scrubber">
+    <img src="icons/10.webp" alt="Scrubber" draggable="false">
+    <span class="label">OVERVIEW (selected works)</span>
+   </button>
+
+  </div>
+
+  <!-- ================= Overview Modal ================= -->
+  <div id="overviewModal" aria-hidden="true">
+    <div class="modal__panel">
+      <button data-close>×</button>
+      <div id="overview">
+        <!-- 元は <a class="glightbox"> だった箇所を普通のアンカーに変更 -->
+        <a href="img08/05.webp"><img src="img08/05.webp" alt=""></a>
+        <a href="img08/06.webp"><img src="img08/06.webp" alt=""></a>
+        <a href="img08/07.webp"><img src="img08/07.webp" alt=""></a>
+      </div>
+    </div>
+  </div>
+
+
+<!-- ================= v2 (Viewer v2) ================= -->
+<div id="v2-viewer" role="dialog" aria-modal="true" aria-hidden="true" hidden>
+  <div class="v2-backdrop"></div>
+  <div class="v2-frame">
+    <img id="v2-img" alt="">
+    <button class="v2-nav v2-prev" type="button" aria-label="Previous">‹</button>
+    <button class="v2-nav v2-next" type="button" aria-label="Next">›</button>
+    <button class="v2-close" type="button" aria-label="Close">×</button>
+  </div>
+</div>
+  <!-- ================= Simple Viewer ================= -->
+  <div id="simple-viewer">
+    <img class="simple-viewer__img" alt="" draggable="false">
+    <div class="simple-viewer__text" hidden></div>
+  </div>
+  <!-- ==================light box=================== -->
+  <!-- Lightbox Modal -->
+<div id="gallery-modal" aria-hidden="true">
+  <div class="gm-backdrop" data-close></div>
+
+<div class="gm-frame" role="dialog" aria-modal="true">
+  <div class="gm-box">
+    <img class="gm-image" alt="">
+    <!-- ナビゲーションボタン（画像の外観はそのまま。押せるのはこの2つだけ） -->
+<button class="lb-nav lb-nav--prev" aria-label="Previous image" type="button">
+  <!-- 左矢印（サイズはCSSで20–30pxに制御） -->
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M15.5 4.5 8 12l7.5 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<button class="lb-nav lb-nav--next" aria-label="Next image" type="button">
+  <!-- 右矢印 -->
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M8.5 4.5 16 12l-7.5 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+
+  </div>
+
+  <div class="gm-ui">
+    <span class="gm-caption"></span>
+    <span class="gm-counter"></span>
+  </div>
+
+  <button class="gm-close" type="button" data-close aria-label="Close">×</button>
+</div>
+
+</div>
+
+
+  <!-- ================================================= -->
+
+
+  <!-- JS -->
+  <script src="script.js" defer></script>
+
+</body>
+</html>
+
+
+
+
+
+
