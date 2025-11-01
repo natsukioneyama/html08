@@ -109,7 +109,14 @@ html, body {
   overflow-y: auto;
   padding: 1rem;
   background: white;
- 
+}
+
+/* ==== スマホ縦向き（ポートレート）調整 ==== */
+@media (orientation: portrait) {
+  #overviewModal .modal__panel {
+    max-width: 90%;   /* ← 70% → 90% に拡大 */
+    max-height: 90%;  /* ← 80% → 90% に拡大 */
+  }
 }
 
 #overviewModal #overview {
