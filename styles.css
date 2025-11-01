@@ -75,18 +75,7 @@ html, body {
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
-/* メールアイコン hover */
-.icon.mail:hover svg, .icon.insta:hover svg{
-  color: #ee0c05c1;
-  transform: scale(1.08);
-}
 
-
-/* Instagramアイコン hover（前の設定を再掲） */
-.icon.insta:hover svg {
-    color: #ee0c05c1; 
-  transform: scale(1.08);
-}
 
 /* ---- 3. Overview Modal ---- */
 #overviewModal {
