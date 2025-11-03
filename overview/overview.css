@@ -1,0 +1,227 @@
+:root{
+  --max-width: 1400px;
+  --gutter: 34px;
+  --cap-size: 12px;
+  --cap-opacity: 0.75;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  height: 100%;
+  margin: 0;
+  background: #a80000;
+  font-family: system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  clip: rect(1px,1px,1px,1px);
+  width: 1px !important; height: 1px !important;
+  overflow: hidden;
+}
+
+#overview {
+  height: 100%;
+}
+
+/* 画面中央に固定する箱（ここだけスクロール） */
+html, body { height: 100%; }
+body { overflow: hidden; }               /* 背景のページスクロールを止める */
+
+.masonry-viewport{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);     /* 画面の上下左右中央 */
+  width: 800px;                           /* ご希望の“赤い四角”の横幅 */
+  height: 700px;                          /* ご希望の“赤い四角”の高さ */
+       /* 可視化用（お好みで変更/削除） */
+  padding: 16px;                         /* 内側の余白（=ガターと揃えると綺麗） */
+  box-sizing: border-box;
+  overflow: auto;                        /* 中だけスクロール */
+  -webkit-overflow-scrolling: touch;     /* iPhoneの慣性スクロール */
+}
+@media (max-width: 800px){
+  .masonry-viewport{
+    top: 0;
+    left: 0;
+    transform: none;        /* 中央固定を解除 */
+    position: fixed;
+    width: 100vw;           /* 画面幅いっぱい */
+    height: 100vh;          /* 画面高さいっぱい */
+    padding: 60px;           /* 少しだけ余白を縮める */
+    border-radius: 0;
+  }
+}
+/* 中の Masonry は箱の幅いっぱいで使う */
+.masonry{
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Masonry：常に4列 */
+.masonry-sizer  { width: calc((100% - 3 * var(--gutter)) / 4); }
+.masonry-gutter { width: var(--gutter); }
+.masonry-item   { width: calc((100% - 3 * var(--gutter)) / 4); margin-bottom: var(--gutter); }
+
+
+.masonry a{ display:block; text-decoration:none; color:inherit; }
+.masonry img{ display:block; width:100%; height:auto; }
+.masonry .cap{ margin: 6px 2px 0; font-size: var(--cap-size); opacity: var(--cap-opacity); display: none;}
+
+.masonry-item:hover img{ opacity: .5; }
+
+
+
+/* ==== Back button (overview → index) ==== */
+.back-btn {
+  -webkit-appearance: none; /* iOS */
+  appearance: none;         /* すべて */
+  background: none;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 2000;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 2000;
+  color: #ffffff;
+  font-size: 15px;
+  line-height: 18px;
+  text-align: center;
+  text-decoration: none;
+  z-index: 50;                   /* 他要素より前に */
+  touch-action: manipulation;              /* iOSのクリック遅延防止 */
+}
+
+
+
+
+
+/* ==== v2 Lightbox（gallery-modal の挙動に合わせた版） ==== */
+:root{
+  --v2-icon-size: 24px;   /* ← 20–30px で調整 */
+  --v2-hit-size: 56px;    /* クリック領域（48–64px推奨） */
+  --v2-edge-offset: 12px; /* 端からの距離 */
+}
+
+/* 基本：非表示 → 表示で中央寄せのflexに */
+#v2-viewer{ 
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 30000;
+  will-change: opacity, transform;
+}
+#v2-viewer[aria-hidden="false"]{ display: flex; }
+
+/* 背景 */
+#v2-viewer .v2-backdrop{
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.533);
+  /* お好みで背景色を入れる場合はここに */
+  /* background: rgba(0,0,0,.55); */
+}
+
+/* 枠（中央寄せ、パンは縦のみ） */
+#v2-viewer .v2-frame{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+  overscroll-behavior: contain;
+}
+
+/* 画像：お手本どおり 70% 制約（幅/高の小さい方にフィット） */
+#v2-viewer #v2-img{
+  display: block;
+  margin: auto;
+  max-width: 72vw;   /* 画面幅の9割まで */
+  max-height: 68vh; 
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;  /* 誤タップ防止（操作はボタン/ジェスチャに集約） */
+  transition: opacity .25s ease;
+  opacity: 1;            /* フェードを使うなら 0 → onload で 1 */
+}
+
+/* キャプション：画像の直下に自然配置（幅は画像に合わせて最大70%） */
+#v2-viewer .v2-cap{
+  position: static;
+  margin: 10px auto 0;
+  max-width: 70%;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+  opacity: .95;
+  pointer-events: none;
+}
+
+/* ナビゲーションボタン：お手本の .lb-nav 相当（frame 内で absolute） */
+#v2-viewer .v2-nav{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--v2-hit-size);
+  height: var(--v2-hit-size);
+  display: grid;
+  place-items: center;
+  border: none;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  z-index: 30010;   /* 画像より上 */
+  padding: 0;
+  outline: none;
+  font-size: 34px;
+}
+#v2-viewer .v2-prev{ left:  var(--v2-edge-offset); }
+#v2-viewer .v2-next{ right: var(--v2-edge-offset); }
+
+/* Close は常に最前面（お手本の .gm-close 相当） */
+#v2-viewer .v2-close{
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: none;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  line-height: 1;
+  color: #fff;
+  cursor: pointer;
+  z-index: 30020;
+}
+#v2-viewer .v2-close:hover{ opacity: .5; }
+
+/* モバイルはヒット領域と端距離だけ少し増やす */
+@media (max-width: 600px){
+  :root{
+    --v2-hit-size: 64px;
+    --v2-edge-offset: 8px;
+  }
+  #v2-viewer .v2-cap{ font-size: 13px; }
+}
+
+/* Masonry側のキャプションは非表示のまま */
+.masonry .cap{ display: none !important; }
