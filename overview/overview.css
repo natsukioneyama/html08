@@ -16,18 +16,18 @@ body {
 
 /* ============ Top bar ============ */
 .topbar {
-  position: relative; top: 0; z-index: 10;
+  position: sticky; top: 0; z-index: 10;
   display: grid; grid-template-columns: 1fr auto;
   align-items: center;
   gap: 12px;
   padding: 10px var(--gutter);
   min-height: var(--bar-h);
 }
-.brand { display:flex; flex-direction:column; line-height: 1.2;}
-.brand .artist { font-weight: 700; font-size: 18px; position:fixed }
+.brand { display:flex; flex-direction:column; line-height: 1.2; position:fixed;}
+.brand .artist { font-weight: 700; font-size: 18px; }
 .brand .role { font-weight: 600; font-size: 12px; letter-spacing: .05em; }
 
-.toplinks { position: absolute; top: 19px; right: 10px; }
+.toplinks { position: fixed; top: 19px; right: 10px; }
 .toplinks a { font-size: 16px; font-weight: 700; color: inherit; text-decoration: none;}
 .toplinks a:hover { opacity: .8; }
 
