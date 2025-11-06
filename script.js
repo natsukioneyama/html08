@@ -871,7 +871,7 @@ window.addEventListener('keydown', e => {
   }, { passive: true });
 })();
 
-})();// ← ここで終わり（この IIFE だけ残す）
+})();// IIFE← ここで終わり（この IIFE だけ残す）
 
 
 
@@ -1037,12 +1037,7 @@ window.addEventListener('keydown', e => {
 })();
 
 
-})(); // ← IIFE
-
-
-
-
-// === Mobile random layout (crypto shuffle + jitter + utility to bottom) ===
+})(); // ← // === Mobile layout (keep order but allow jitter) ===
 (function () {
   const mq = window.matchMedia('(max-width: 768px)');
 
@@ -1057,6 +1052,7 @@ window.addEventListener('keydown', e => {
     return arr;
   }
 
+  // 見た目の“崩し”（ランダムにわずかにずらす）
   function jitterIcons(px = 10) {
     document.querySelectorAll('.icon-layer .icon').forEach(el => {
       const jx = (Math.random() * 2 - 1) * px; // -px〜+px
@@ -1071,32 +1067,23 @@ window.addEventListener('keydown', e => {
     const layer = document.querySelector('.icon-layer');
     if (!layer) return;
 
-    // 1) アイコンを分離：メイン群 と ユーティリティ群（例：Instagram/Mail）
-    const all = [...layer.children].filter(el => el.classList.contains('icon'));
-    const util = all.filter(el => el.matches('.insta, .mail, [data-utility="1"]'));
-    const main = all.filter(el => !util.includes(el));
+    // ==== 並び順は固定（シャッフル無効）====
+    // shuffle(main) や shuffle(util) は行わない
 
-    // 2) それぞれをシャッフル
-    shuffle(main);
-    shuffle(util);
-
-    // 3) メインを先に、ユーティリティを後ろにして再配置
-    const order = [...main, ...util];
-    order.forEach(el => layer.appendChild(el));
-
-    // 4) 見た目の“崩し”
+    // ただしジッターは残す
     jitterIcons(10);
   }
 
-  // 初回＆レイアウト切替時だけ適用（リサイズ連打のたびに順序が変わらないよう控えめに）
+  // 初回＆レイアウト切替時だけ適用
   window.addEventListener('DOMContentLoaded', applyMobileRandom);
   let t;
   window.addEventListener('resize', () => {
     clearTimeout(t);
     t = setTimeout(applyMobileRandom, 200);
   });
-
 })();
+
+
 
 
 
