@@ -16,7 +16,7 @@ body {
 
 /* ============ Top bar ============ */
 .topbar {
-  position: sticky; top: 0; z-index: 10;
+  position: fixed; top: 0; z-index: 10;
   display: grid; grid-template-columns: 1fr auto;
   align-items: center;
   gap: 12px;
