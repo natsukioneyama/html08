@@ -243,3 +243,30 @@ body {
   }
 }
 
+
+
+/* === iPhone / Safari 揺れ防止設定 === */
+html, body {
+  overscroll-behavior: none;         /* ページ全体のバウンス無効 */
+  touch-action: none;                /* タッチ操作のブラウザ挙動を全停止 */
+  -webkit-overflow-scrolling: auto;  /* 慣性スクロールを無効化 */
+}
+
+/* モーダル表示中にスクロールを封じる */
+.gm {
+  position: fixed;
+  inset: 0;
+  overflow: hidden !important;       /* スクロールを完全遮断 */
+  overscroll-behavior: contain !important;
+  touch-action: none !important;
+}
+
+/* 内部のframeやcaptionが余白で動かないよう固定 */
+.gm-frame,
+.gm-caption {
+  overscroll-behavior: contain !important;
+  touch-action: none !important;
+  -webkit-overflow-scrolling: auto !important;
+}
+
+
