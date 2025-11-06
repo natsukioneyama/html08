@@ -245,6 +245,11 @@ body {
  .gm-caption, .gm-close {
     padding-bottom: 15px !important;
   }
+  
+  .gm-counter {
+    padding-bottom :10px !important;
+  }
+  
 }
 
 
