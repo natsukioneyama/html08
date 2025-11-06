@@ -249,12 +249,6 @@ body {
 
 
 
-/* === iPhone / Safari 揺れ防止設定 === */
-html, body {
-  overscroll-behavior: none;         /* ページ全体のバウンス無効 */
-  touch-action: none;                /* タッチ操作のブラウザ挙動を全停止 */
-  -webkit-overflow-scrolling: auto;  /* 慣性スクロールを無効化 */
-}
 
 /* === デフォルトではスクロール可能に戻す === */
 html, body {
