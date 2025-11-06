@@ -117,10 +117,9 @@ body {
   justify-content: center;
 }
 
-/*
 @media (max-width: 767px) {
-  .gm-frame { width: 100vw; height: 80vh; }
-}*/
+  .gm-frame { width: 85vw; height: 70vh; }
+}
 
 .gm-frame img {
   display:block;
