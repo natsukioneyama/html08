@@ -947,6 +947,8 @@ window.addEventListener('keydown', e => {
   }, { passive: false });
 })();
 
+
+
 // ==== Simple Viewer: open/close (IDは #simple-viewer を前提) ====
 (function () {
   const sv = document.getElementById('simple-viewer');
@@ -1037,7 +1039,14 @@ window.addEventListener('keydown', e => {
 })();
 
 
-})(); // ← // === Mobile layout (keep order but allow jitter) ===
+})(); // IILF← IILFの終わり
+
+
+
+
+
+
+// === Mobile layout (keep order but allow jitter) ===
 (function () {
   const mq = window.matchMedia('(max-width: 768px)');
 
