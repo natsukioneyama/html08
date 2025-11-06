@@ -118,6 +118,10 @@ body {
 }
 
 @media (max-width: 767px) {
+      .gm-frame {
+    position: relative;
+    top: -20px !important;   /* ← 上に20px移動 */
+  }
   .gm-frame { width: 85vw; height: 70vh; }
 }
 
