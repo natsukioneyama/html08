@@ -67,6 +67,31 @@ a.icon {
   transform: translate(-50%, -50%);
 }
 
+/* 768px → 1024px に広げる（iPhone横向きもグリッド化） */
+@media (max-width: 1024px){
+  .icon-layer{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+    gap: 18px 22px;
+    align-items: start;
+    justify-items: center;
+    padding: 16vw 6vw 24vw;
+  }
+  .icon{
+    position: static !important;
+    left: auto !important;
+    top:  auto !important;
+    transform: translate(
+      calc(var(--jx, 0px) + var(--mx, 0px)),
+      calc(var(--jy, 0px) + var(--my, 0px))
+    );
+    touch-action: pan-y;
+  }
+  .icon img,
+  .icon video{ height: 72px; }
+  .icon-md img, .icon-md video{ height: 84px; }
+  .icon-lg img, .icon-lg video{ height: 100px; }
+}
 .icon img {
   width: auto;
   height: 80px;
