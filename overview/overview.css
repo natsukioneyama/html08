@@ -256,16 +256,24 @@ html, body {
   -webkit-overflow-scrolling: auto;  /* 慣性スクロールを無効化 */
 }
 
-/* モーダル表示中にスクロールを封じる */
-.gm {
-  position: fixed;
-  inset: 0;
-  overflow: hidden !important;       /* スクロールを完全遮断 */
-  overscroll-behavior: contain !important;
-  touch-action: none !important;
+/* === デフォルトではスクロール可能に戻す === */
+html, body {
+  overscroll-behavior: auto;
+  touch-action: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* 内部のframeやcaptionが余白で動かないよう固定 */
+/* === ギャラリーモーダル(.gm)が開いている時だけスクロール禁止 === */
+.gm[aria-hidden="false"] {
+  position: fixed;                 /* 背景を固定して動かさない */
+  inset: 0;
+  overflow: hidden !important;     /* スクロールを封じる */
+  overscroll-behavior: contain !important;
+  touch-action: none !important;
+  -webkit-overflow-scrolling: auto !important;
+}
+
+/* モーダル内の frame/caption の揺れも封じる */
 .gm-frame,
 .gm-caption {
   overscroll-behavior: contain !important;
