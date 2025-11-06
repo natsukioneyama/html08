@@ -23,39 +23,19 @@
       <div class="icon-layer">
 
     <!-- Simple image viewer -->
-     <button class="icon" data-type="simple-view" data-src="./credits/credits_snippet.html"
-      style="--dx: 191px; --dy: 291px;">
-      <img src="icons/01.webp" alt="Credits" draggable="false">
-      <span class="label">credits.txt</span>
-    </button>
 
-    <!-- Mail icon -->
-     <button class="icon icon-md"
-        onclick="location.href='mailto:natsukimua@gmail.com'"
-        style="--dx: 325px; --dy: 340px;"
-        aria-label="Email Natsuki">
-      <img src="icons/14.webp" alt="Mail icon" draggable="false">
-      <span class="label">Mail</span>
-    </button>
-    <button class="icon icon-md"
-        onclick="window.open('https://www.instagram.com/natsukimua/', '_blank')"
-        style="--dx: -98px; --dy: 280px;"
-        aria-label="Instagram">
-    <img src="icons/13.webp" alt="Instagram icon" draggable="false">
-    <span class="label">instagram</span>
+  <button class="icon icon-lg"
+    data-action="link"
+    data-href="scrubber/scrubber.html"
+    data-target="_blank"
+    style="--dx: 23px; --dy: 230px;"
+    aria-label="Open Scrubber">
+    <img src="scrubber/icon.webp" alt="Scrubber" draggable="false">
+    <span class="label">scrubber.html</span>
    </button>
-
-     
-
+  
+  
     
-     <button class="icon icon-md" data-type="simple-view" data-src="video/v01.mp4" style=" --dx: 30px; --dy: 100px;">
-     <video src="video/v01.mp4" muted loop autoplay playsinline></video>
-     <span class="label">GIVENCHY HOMME.mp4</span>
-     </button>
-      <button class="icon icon-md" data-type="simple-view" data-src="video/v02.mp4" style="--dx: 163px; --dy: 187px;">
-     <video src="video/v02.mp4" muted loop autoplay playsinline></video>
-     <span class="label">MASSIMILIANO BOMBA</span>
-     </button>
       <button class="icon" data-type="simple-view" data-src="icons/img04.webp" style="--dx: 80px; --dy: -22px;">
       <img src="icons/04.webp" alt="Sample" draggable="false">
       <span class="label">body_01.jpg</span>
@@ -64,6 +44,23 @@
       <img src="icons/05.webp" alt="Sample" draggable="false">
       <span class="label">body_02.jpg</span>
        </button>
+      
+      
+      <button class="icon" data-type="overview" data-ov="#ov-skin" style="--dx: -60px; --dy: -40px;">
+  < src="project/skin01/icon.webp" alt="Overview" draggable="false">
+  <span class="label">SKIN_XX</span>
+</button>
+<button class="icon" data-type="overview" data-ov="#ov-untitled" style="--dx: 72px; --dy: -305px;">
+  <img src="project/untitled.01/icon.webp" alt="Overview" draggable="false">
+  <span class="label">.BEAUTY BY LUCIE ROX</span>
+</button>
+<button class="icon" data-type="overview" data-ov="#ov-carldinerbeauty01" style="--dx: -132px; --dy: -308px;">
+  <img src="project/carldinerbeauty01/icon.webp" alt="Overview" draggable="false">
+  <span class="label">CARL DINER_ BEAUTY</span>
+</button>
+      
+      
+      
       <button class="icon" data-type="simple-view" data-src="icons/img06.webp" style="--dx: 220px; --dy: -100px;">
       <img src="icons/06.webp" alt="Sample" draggable="false">
       <span class="label">lip_01.jpg</span>
@@ -76,6 +73,23 @@
       <img src="icons/08.webp" alt="Sample" draggable="false">
       <span class="label">body_03.jpg</span>
     </button>
+    
+    <button class="icon" data-type="overview" data-ov="#ov-tess" style="--dx: -160px; --dy: 50px;">
+  <img src="project/tesspetronio_01/icon.webp" alt="Overview" draggable="false">
+  <span class="label">TESS PETRONIO X SUZANNE KOLLER</span>
+</button>
+
+
+  <button class="icon icon-md"
+  type="button"
+  style="--dx: 199px; --dy: 64px"
+  aria-label="Open Overview (locked)"
+  onclick="window.open('./overview/overview.html?gate=1','_blank')">
+  <img src="icons/12.webp" alt="Overview" draggable="false">
+  <span class="label">OVERVIEW<br>(selected works)</span>
+</button>
+
+    
       <button class="icon" data-type="simple-view" data-src="icons/img09.webp" style="--dx: 110px; --dy: -190px;">
       <img src="icons/09.webp" alt="Sample" draggable="false">
       <span class="label">VOGUE MEXICO</span>
@@ -89,24 +103,15 @@
       <span class="label">beauty_01.jpg</span>
     </button>
 
+
+  <button class="icon icon-md" data-type="simple-view" data-src="video/v02.mp4" style="--dx: 163px; --dy: 187px;">
+     <video src="video/v02.mp4" muted loop autoplay playsinline></video>
+     <span class="label">MASSIMILIANO BOMBA</span>
+     </button>
  <!-- モーダル＋縦ビューア -->
 
-<button class="icon" data-type="overview" data-ov="#ov-tess" style="--dx: -160px; --dy: 50px;">
-  <img src="project/tesspetronio_01/icon.webp" alt="Overview" draggable="false">
-  <span class="label">TESS PETRONIO X SUZANNE KOLLER</span>
-</button>
-<button class="icon" data-type="overview" data-ov="#ov-skin" style="--dx: -60px; --dy: -40px;">
-  <img src="project/skin01/icon.webp" alt="Overview" draggable="false">
-  <span class="label">SKIN_XX</span>
-</button>
-<button class="icon" data-type="overview" data-ov="#ov-untitled" style="--dx: 72px; --dy: -305px;">
-  <img src="project/untitled.01/icon.webp" alt="Overview" draggable="false">
-  <span class="label">.BEAUTY BY LUCIE ROX</span>
-</button>
-<button class="icon" data-type="overview" data-ov="#ov-carldinerbeauty01" style="--dx: -132px; --dy: -308px;">
-  <img src="project/carldinerbeauty01/icon.webp" alt="Overview" draggable="false">
-  <span class="label">CARL DINER_ BEAUTY</span>
-</button>
+
+
 <button class="icon" data-type="overview" data-ov="#ov-bts01" style="--dx: 320px; --dy: -20px;">
   <img src="project/bts01/icon.webp" alt="Overview" draggable="false">
   <span class="label">BTS_01</span>
@@ -127,24 +132,37 @@
       <span class="label">BEAUTY PAPERS</span>
     </button>
 
-    <!-- Big icon -->
-   <button class="icon icon-lg"
-    data-action="link"
-    data-href="scrubber/scrubber.html"
-    data-target="_blank"
-    style="--dx: 23px; --dy: 230px;"
-    aria-label="Open Scrubber">
-    <img src="scrubber/icon.webp" alt="Scrubber" draggable="false">
-    <span class="label">scrubber.html</span>
+      <button class="icon icon-md" data-type="simple-view" data-src="video/v01.mp4" style=" --dx: 30px; --dy: 100px;">
+     <video src="video/v01.mp4" muted loop autoplay playsinline></video>
+     <span class="label">GIVENCHY HOMME.mp4</span>
+     </button>
+
+
+
+
+
+
+   <button class="icon" data-type="simple-view" data-src="./credits/credits_snippet.html"
+      style="--dx: 191px; --dy: 291px;">
+      <img src="icons/01.webp" alt="Credits" draggable="false">
+      <span class="label">credits.txt</span>
+    </button>
+
+    <!-- Mail icon -->
+     <button class="icon icon-md"
+        onclick="location.href='mailto:natsukimua@gmail.com'"
+        style="--dx: 325px; --dy: 340px;"
+        aria-label="Email Natsuki">
+      <img src="icons/14.webp" alt="Mail icon" draggable="false">
+      <span class="label">Mail</span>
+    </button>
+    <button class="icon icon-md"
+        onclick="window.open('https://www.instagram.com/natsukimua/', '_blank')"
+        style="--dx: -98px; --dy: 280px;"
+        aria-label="Instagram">
+    <img src="icons/13.webp" alt="Instagram icon" draggable="false">
+    <span class="label">instagram</span>
    </button>
-  <button class="icon icon-md"
-  type="button"
-  style="--dx: 199px; --dy: 64px"
-  aria-label="Open Overview (locked)"
-  onclick="window.open('./overview/overview.html?gate=1','_blank')">
-  <img src="icons/12.webp" alt="Overview" draggable="false">
-  <span class="label">OVERVIEW<br>(selected works)</span>
-</button>
 
 </div>
 
