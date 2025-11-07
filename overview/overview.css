@@ -319,16 +319,6 @@ html, body {
     opacity: 1;
     transform: translateY(0);
   }
-
-  /* Desktop: グループ hover 時の白オーバーレイ（同構造） */
-  .justified-grid.is-group-hover a.is-in-group::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.54);
-    pointer-events: none;
-    z-index: 1;
-  }
 }
 
 
