@@ -296,9 +296,21 @@ html, body {
     opacity: 1;
     color: white;
   }
-  /* ★ is-in-group が付いたサムネだけ半透明にする ★ */
-  #overviewGrid.is-group-tap .jg-entry.is-in-group {
-    opacity: .35;
+
+  /* is-in-group が付いたサムネだけ半透明オーバーレイを重ねる */
+  #overviewGrid.is-group-tap .jg-entry.is-in-group::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.54); /* ← 白の薄いレイヤー */
+    pointer-events: none;
+    z-index: 1; /* オーバーレイは下層 */
+  }
+
+  /* 念のためトランジションを維持 */
+  #overviewGrid.is-group-tap .jg-entry {
+    transition: opacity .15s ease;
+  }
 }
 
 /* === Desktop hover: サムネにホバーしたらキャプション表示 === */
@@ -307,8 +319,18 @@ html, body {
     opacity: 1;
     transform: translateY(0);
   }
+
+  /* Desktop: グループ hover 時の白オーバーレイ（同構造） */
+  .justified-grid.is-group-hover a.is-in-group::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.54);
+    pointer-events: none;
+    z-index: 1;
+  }
 }
-}
+
 
 
 
