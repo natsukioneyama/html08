@@ -304,6 +304,7 @@ html, body {
   /* ★ is-in-group が付いたサムネだけ半透明にする ★ */
   #overviewGrid.is-group-tap .jg-entry.is-in-group {
     opacity: .35;
+    color: white;
   }
 }
 
@@ -315,16 +316,6 @@ html, body {
   #overviewGrid a.jg-entry:hover .ov-cap {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-@media (hover:hover) and (pointer:fine) {
-  #overviewGrid.is-group-tap .jg-entry a.is-in-group::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.542);
-    pointer-events: none;
-    z-index: 1; /* ← オーバーレイは下層 */
   }
 }
 
