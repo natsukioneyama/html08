@@ -298,3 +298,21 @@ html, body {
 #overviewGrid a.tap-armed .ov-cap {
   opacity: 1;
 }
+
+
+
+
+
+
+/* モバイル：グループ強調（1回タップ時に発火） */
+#overviewGrid.is-group-tap a.jg-entry {
+  transition: opacity .15s ease;
+}
+#overviewGrid.is-group-tap a.jg-entry:not(.is-in-group) {
+  opacity: .35;             /* 半透明にする濃度はお好みで */
+}
+
+/* 既存のキャプション表示（tap-armed）のまま使う */
+#overviewGrid .ov-cap { opacity: 0; transition: opacity .15s ease; }
+#overviewGrid a.tap-armed .ov-cap { opacity: 1; }
+
