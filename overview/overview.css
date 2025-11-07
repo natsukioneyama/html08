@@ -294,7 +294,6 @@ html, body {
   /* 1回目タップで付く .tap-armed のときだけキャプション表示 */
   #overviewGrid a.tap-armed .ov-cap {
     opacity: 1;
-    color: white;
   }
 
   /* is-in-group が付いたサムネだけ半透明オーバーレイを重ねる */
