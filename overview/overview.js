@@ -299,7 +299,7 @@
 
 // === Mobile: 1st tap -> show group caption on head + dim group, 2nd tap -> open viewer ===
 (function () {
-  const isTouch = matchMedia('(hover: none) and (pointer: coarse)').matches;
+  const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
   if (!isTouch) return;
 
   const grid = document.getElementById('overviewGrid');
@@ -309,15 +309,26 @@
     return el.getAttribute('data-group') || el.getAttribute('data-g') || '';
   }
 
-  function findGroupHead(groupId) {
+  function getGroupItems(groupId) {
+    if (!groupId) return [];
+    return Array.from(
+      grid.querySelectorAll(
+        `a.jg-entry[data-group="${groupId}"], a.jg-entry[data-g="${groupId}"]`
+      )
+    );
+  }
+
+  // グループごとの先頭サムネ (data-head="1" があればそれ、なければ最初の1枚)
+  function getHeadForGroup(groupId) {
     if (!groupId) return null;
-    const sel = [
-      `a.jg-entry[data-group="${CSS.escape(groupId)}"][data-head="1"]`,
-      `a.jg-entry[data-g="${CSS.escape(groupId)}"][data-head="1"]`,
-      `a.jg-entry[data-group="${CSS.escape(groupId)}"]`,
-      `a.jg-entry[data-g="${CSS.escape(groupId)}"]`
-    ].join(',');
-    return grid.querySelector(sel);
+    const withHead = grid.querySelector(
+      `a.jg-entry[data-group="${groupId}"][data-head="1"], ` +
+      `a.jg-entry[data-g="${groupId}"][data-head="1"]`
+    );
+    if (withHead) return withHead;
+
+    const items = getGroupItems(groupId);
+    return items[0] || null;
   }
 
   function ensureCaption(el) {
@@ -335,10 +346,6 @@
         l1 ? `<em>${l1}</em>`: '',
         l2 ? `<i>${l2}</i>`  : ''
       ].filter(Boolean).join('');
-      // オーバーレイと重ならないよう head を相対配置
-      if (!getComputedStyle(el).position || getComputedStyle(el).position === 'static') {
-        el.style.position = 'relative';
-      }
       el.appendChild(cap);
     }
     return cap;
@@ -346,73 +353,74 @@
 
   function clearHighlight() {
     grid.classList.remove('is-group-tap');
-    grid.querySelectorAll('a.jg-entry.is-in-group').forEach(a => a.classList.remove('is-in-group'));
-    grid.querySelectorAll('a.jg-entry.tap-armed').forEach(a => a.classList.remove('tap-armed'));
+    grid.querySelectorAll('a.jg-entry.is-in-group').forEach(el => el.classList.remove('is-in-group'));
+    grid.querySelectorAll('a.jg-entry.tap-armed').forEach(el => el.removeAttribute('data-tap-head'));
+    grid.querySelectorAll('a.jg-entry.tap-armed').forEach(el => el.classList.remove('tap-armed'));
   }
 
-  let activeGroupId = '';
+  let activeGroup = '';
+  let headEl = null;
 
-  // メイングリッド内のタップをフック
-  grid.addEventListener('click', (ev) => {
+  grid.addEventListener('click', function (ev) {
     const item = ev.target.closest('a.jg-entry');
     if (!item) return;
 
     const groupId = getGroupId(item);
-    if (!groupId) return; // グループ指定がない場合は素通し（既存処理に任せる）
+    if (!groupId) return; // グループ外のサムネはそのまま既存処理へ
 
-    const head = findGroupHead(groupId) || item;
+    const head = getHeadForGroup(groupId);
+    if (!head) return;
 
-    // すでにこのグループがアクティブ＆ヘッドが tap-armed → 2回目タップ扱い（ギャラリーを開かせる）
+    // 2回目タップ: すでにこのグループがアクティブで、ヘッドが armed → 既存クリックを通して開く
     if (
       grid.classList.contains('is-group-tap') &&
-      active == groupId &&
+      activeGroup === groupId &&
+      headEl === head &&
       head.classList.contains('tap-armed')
     ) {
-      clearHighlight();      // 状態リセット
-      return;                // preventDefault しない → 既存のクリック処理が動いてギャラリー起動
+      clearHighlight(); // 見た目だけ戻す
+      return;           // stopせずそのまま → 元の click ハンドラが発火してギャラリー表示
     }
 
-    // 1回目タップ（または別グループに切り替え）
+    // 1回目 or グループ切替: ハイライト表示してクリックを止める
     ev.preventDefault();
     ev.stopPropagation();
 
     clearHighlight();
-    active = groupId;
+    activeGroup = groupId;
+    headEl = head;
 
-    // このグループの要素をマーク
-    const groupItems = Array.from(
-      grid.querySelectorAll(
-        `a.jg-entry[data-group="${CSS.escape(groupId)}"],` +
-        `a.jg-entry[data-g="${CSS.escape(groupId)}"]`
-      )
-    );
-    if (!groupItems.length) return;
+    const items = getGroupItems(groupId);
+    if (!items.length) return;
 
+    // グループ全体をマーク
     grid.classList.add('is-group-tap');
-    groupItems.forEach(a => a.classList.add('is-in-group'));
+    items.forEach(el => el.classList.add('is-in-group'));
 
-    // キャプションはグループの head だけ
-    const headEl = head;
-    const cap = ensure_caption(headEl);
+    // ヘッドにだけキャプション＆tap-armed
+    const cap = ensureCaption(headEl);
     if (cap) {
       headEl.classList.add('tap-armed');
+      headEl.setAttribute('data-tap-head', '1');
     }
 
-    // 何も起きなかったり放置されたら自動解除
+    // しばらく何もしなかったら自動解除
     clearTimeout(headEl._tapTimer);
     headEl._tapTimer = setTimeout(() => {
-      if (headEl.classList.contains('tap-armed')) {
+      if (headEl && headEl.classList.contains('tap-armed')) {
         clearHighlight();
+        activeGroup = '';
+        headEl = null;
       }
     }, 1500);
   }, true);
 
-  // グリッド外タップでリセット
+  // グリッドの外をタップしたら解除
   document.addEventListener('click', (ev) => {
     if (!grid.contains(ev.target)) {
       clearHighlight();
-      active = '';
+      activeGroup = '';
+      headEl = null;
     }
   }, true);
 })();
-
