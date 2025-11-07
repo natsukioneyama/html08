@@ -318,7 +318,7 @@
         cap.className = 'ov-cap';
         cap.innerHTML = [t ? `<b>${t}</b>` : '', l1 ? `<em>${l1}</em>` : '', l2 ? `<i>${l2}</i>` : '']
           .filter(Boolean).join('');
-        if (!item.style.position) item.style.position = 'relative';
+   
         item.appendChild(cap);
       }
     }
