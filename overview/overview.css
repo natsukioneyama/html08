@@ -295,7 +295,7 @@ html, body {
   #overviewGrid a.tap-armed .ov-cap {
     opacity: 1;
   }
-
+  
   /* is-in-group が付いたサムネだけ半透明オーバーレイを重ねる */
   #overviewGrid.is-group-tap .jg-entry.is-in-group::after {
     content: "";
@@ -305,6 +305,11 @@ html, body {
     pointer-events: none;
     z-index: 1; /* オーバーレイは下層 */
   }
+
+   #overviewGrid .ov-cap {
+    position: absolute;
+    z-index: 2; /* ← これが決定打 */
+   }
 
   /* 念のためトランジションを維持 */
   #overviewGrid.is-group-tap .jg-entry {
