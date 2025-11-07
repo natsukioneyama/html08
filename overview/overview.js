@@ -299,7 +299,7 @@
 
 
 
-/// Mobile: 1st tap shows caption, 2nd tap opens viewer (handles optional group dim)
+// === Mobile: 1st tap shows caption, 2nd tap opens viewer (+ dim same group) ===
 (function () {
   const isTouch = matchMedia('(hover: none) and (pointer: coarse)').matches;
   if (!isTouch) return;
@@ -307,7 +307,32 @@
   const grid = document.getElementById('overviewGrid');
   if (!grid) return;
 
-  function ensureCaption(item) {
+  function clearGroupDim() {
+    grid.classList.remove('is-group-tap');
+    grid.querySelectorAll('a.jg-entry.is-in-group')
+        .forEach(a => a.classList.remove('is-in-group'));
+  }
+
+  grid.addEventListener('click', (ev) => {
+    const item = ev.target.closest('a.jg-entry');
+    if (!item) return;
+
+    // 2回目タップ：解除して通常クリックへ（ギャラリー起動）
+    if (item.classList.contains('tap-armed')) {
+      item.classList.remove('tap-armed');
+      clearGroupDim();
+      return;
+    }
+
+    // 1回目タップ：キャプション表示のみ、リンク動作は止める
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    // 既存 tap-armed を解除
+    grid.querySelectorAll('a.jg-entry.tap-armed')
+        .forEach(a => a.classList.remove('tap-armed'));
+
+    // 必要なら .ov-cap を生成
     let cap = item.querySelector('.ov-cap');
     if (!cap) {
       const t  = item.getAttribute('data-title') || '';
@@ -316,60 +341,46 @@
       if (t || l1 || l2) {
         cap = document.createElement('span');
         cap.className = 'ov-cap';
-        cap.innerHTML = [t ? `<b>${t}</b>` : '', l1 ? `<em>${l1}</em>` : '', l2 ? `<i>${l2}</i>` : '']
-          .filter(Boolean).join('');
-   
+        cap.innerHTML = [
+          t  ? `<b>${t}</b>`  : '',
+          l1 ? `<em>${l1}</em>` : '',
+          l2 ? `<i>${l2}</i>`  : ''
+        ].filter(Boolean).join('');
         item.appendChild(cap);
       }
     }
-    return cap;
-  }
+    if (!cap) return;
 
-  function clearGroupDim() {
-    grid.classList.remove('is-group-tap');
-    grid.querySelectorAll('a.jg-entry.is-in-group').forEach(a => a.classList.remove('is-in-group'));
-  }
-
-  grid.addEventListener('click', (ev) => {
-    const item = ev.target.closest('a.jg-entry');
-    if (!item) return;
-
-    const cap = ensureCaption(item);
-    if (!cap) return; // キャプション無ければ二段階不要
-
-    const g = item.getAttribute('data-group') || item.getAttribute('data-g') || '';
-
-    if (item.classList.contains('tap-armed')) {
-      item.classList.remove('tap-armed');
-      clearGroupDim();
-      return; // 以降は既存のクリック処理（viewer 開く）へ
-    }
-
-    ev.preventDefault();
-    ev.stopPropagation();
-
-    grid.querySelectorAll('a.jg-entry.tap-armed').forEach(a => a.classList.remove('tap-armed'));
     item.classList.add('tap-armed');
 
+    // グループ取得
+    const g = item.getAttribute('data-group') || item.getAttribute('data-g') || '';
+    clearGroupDim();
+
+    if (g) {
+      grid.classList.add('is-group-tap');
+      grid.querySelectorAll('a.jg-entry').forEach(a => {
+        const ag = a.getAttribute('data-group') || a.getAttribute('data-g') || '';
+        // 同じグループだけ is-in-group を付与
+        if (ag === g) {
+          a.classList.add('is-in-group');
+        }
+      });
+    }
+
+    // 自動解除タイマー
     clearTimeout(item._tapTimer);
     item._tapTimer = setTimeout(() => {
       item.classList.remove('tap-armed');
       clearGroupDim();
     }, 1500);
-
-    clearGroupDim();
-    if (g) {
-      grid.classList.add('is-group-tap');
-      grid.querySelectorAll('a.jg-entry').forEach(a => {
-        const ag = a.getAttribute('data-group') || a.getAttribute('data-g') || '';
-        if (ag && ag === g) a.classList.add('is-in-group');
-      });
-    }
   }, true);
 
+  // グリッド外をタップしたら全解除
   document.addEventListener('click', (e) => {
     if (!e.target.closest('#overviewGrid')) {
-      grid.querySelectorAll('a.jg-entry.tap-armed').forEach(a => a.classList.remove('tap-armed'));
+      grid.querySelectorAll('a.jg-entry.tap-armed')
+          .forEach(a => a.classList.remove('tap-armed'));
       clearGroupDim();
     }
   }, true);
