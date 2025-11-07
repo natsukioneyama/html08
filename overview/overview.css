@@ -294,22 +294,12 @@ html, body {
   /* 1回目タップで付く .tap-armed のときだけキャプション表示 */
   #overviewGrid a.tap-armed .ov-cap {
     opacity: 1;
+    color: white;
   }
-
-  /* アニメーション用（任意） */
-  #overviewGrid.is-group-tap .jg-entry {
-    transition: opacity .15s ease;
-  }
-
   /* ★ is-in-group が付いたサムネだけ半透明にする ★ */
   #overviewGrid.is-group-tap .jg-entry.is-in-group {
     opacity: .35;
-    color: white;
-  }
 }
-
-
-
 
 /* === Desktop hover: サムネにホバーしたらキャプション表示 === */
 @media (hover: hover) and (pointer: fine) {
