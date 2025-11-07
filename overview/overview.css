@@ -89,11 +89,6 @@ body {
 
 
 @media (hover: none) and (pointer: coarse) {
-  /* Mobile: when JS adds is-group-tap */
-  #overviewGrid.is-group-tap a.is-in-group {
-    position: relative;
-  }
-
   /* Improve touch behavior: prevent image dragging / tap highlight */
   #overviewGrid a.jg-entry {
     -webkit-tap-highlight-color: transparent;
