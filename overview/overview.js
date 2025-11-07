@@ -370,3 +370,83 @@
     item._tapTimer = setTimeout(() => item.classList.remove('tap-armed'), 1500);
   }, true);
 })();
+
+
+
+// === Mobile: 1st tap shows caption, 2nd tap opens viewer (+ group dim) ===
+(function () {
+  const isTouch = matchMedia('(hover: none) and (pointer: coarse)').matches;
+  if (!isTouch) return;
+
+  const grid = document.getElementById('overviewGrid');
+  if (!grid) return;
+
+  function clearGroupDim() {
+    grid.classList.remove('is-group-tap');
+    grid.querySelectorAll('a.jg-entry.is-in-group').forEach(a => a.classList.remove('is-in-group'));
+  }
+
+  grid.addEventListener('click', (ev) => {
+    const item = ev.target.closest('a.jg-entry');
+    if (!item) return;
+
+    // .ov-cap が無ければ生成（前の実装そのまま）
+    let cap = item.querySelector('.ov-cap');
+    if (!cap) {
+      const t  = item.getAttribute('data-title') || '';
+      const l1 = item.getAttribute('data-line1') || '';
+      const l2 = item.getAttribute('data-line2') || '';
+      if (t || l1 || l2) {
+        cap = document.createElement('span');
+        cap.className = 'ov-cap';
+        cap.innerHTML = [t ? `<b>${t}</b>` : '', l1 ? `<em>${l1}</em>` : '', l2 ? `<i>${l2}</i>` : '']
+          .filter(Boolean).join('');
+        item.style.position = 'relative';
+        item.appendChild(cap);
+      }
+    }
+
+    // グループ名（data-group / data-g のどちらでも対応）
+    const g = item.getAttribute('data-group') || item.getAttribute('data-g') || '';
+
+    // 2回目タップ：強調解除して既存のクリック処理へ（= ギャラリーを開く）
+    if (item.classList.contains('tap-armed')) {
+      item.classList.remove('tap-armed');
+      clearGroupDim();
+      return; // 既存の viewer 起動がこの後に発火
+    }
+
+    // 1回目タップ：キャプション表示 + 同グループ以外を半透明化
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    // 既存の武装を解除
+    grid.querySelectorAll('a.jg-entry.tap-armed').forEach(a => a.classList.remove('tap-armed'));
+    item.classList.add('tap-armed');
+
+    // グループ強調
+    clearGroupDim();
+    if (g) {
+      grid.classList.add('is-group-tap');
+      grid.querySelectorAll('a.jg-entry').forEach(a => {
+        const ag = a.getAttribute('data-group') || a.getAttribute('data-g') || '';
+        if (ag && ag === g) a.classList.add('is-in-group');
+      });
+    }
+
+    // 放置対策：1.5秒で自動解除
+    clearTimeout(item._tapTimer);
+    item._tapTimer = setTimeout(() => {
+      item.classList.remove('tap-armed');
+      clearGroupDim();
+    }, 1500);
+  }, true);
+
+  // モーダル外クリック等で解除（保険）
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#overviewGrid')) {
+      grid.querySelectorAll('a.jg-entry.tap-armed').forEach(a => a.classList.remove('tap-armed'));
+      clearGroupDim();
+    }
+  }, true);
+})();
