@@ -1,0 +1,304 @@
+:root{
+  --bar-h: 72px;
+  --gutter: clamp(3px, 2vw, 5px);
+  /* 画像下のキャプション＋Backが占める高さの見積もり */
+  --gm-footer-h: clamp(60px, 12vw, 96px);
+}
+
+/* ============ Base ============ */
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+
+body {
+  font-family: system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+  color: #111;
+  background: #d20606;
+}
+
+/* ============ Top bar ============ */
+.topbar {
+  position: relative; top: 0; z-index: 10;
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px var(--gutter);
+  min-height: var(--bar-h);
+}
+.brand { display:flex; flex-direction:column; line-height: 1.2; position:fixed;}
+.brand .artist { font-weight: 700; font-size: 18px; }
+.brand .role { font-weight: 600; font-size: 12px; letter-spacing: .05em; }
+
+.toplinks { position: fixed; top: 19px; right: 10px; }
+.toplinks a { font-size: 16px; font-weight: 700; color: inherit; text-decoration: none;}
+.toplinks a:hover { opacity: .8; }
+
+/* ============ Page ============ */
+.page { padding: 0 var(--gutter) var(--gutter); }
+
+/* ============ Overview (Justified Gallery) ============ */
+.justified-grid { margin-top: 8px; position:relative; font-size:0; line-height:0;}
+.justified-grid a { display: inline-block; overflow: hidden;  }
+.justified-grid img { display:block; width:100%; height:auto; }
+
+
+/* Hover caption: only on the head (data-head="1") when that group is hovered */
+.ov-cap {
+  position: absolute;
+  left: 4px;
+  bottom: 1px;
+  color: #000000;
+  font-size: 0.6rem !important;
+  font-family: inherit;
+  font-style: normal;
+  opacity: 0;
+  pointer-events: none;
+  max-width: 80%;
+  line-height: 1.3;
+}
+
+.ov-cap em,
+.ov-cap i {
+  display: block;
+  opacity: .9;
+  font-style: normal;   /* ← 斜体をオフ */
+  font-weight: 600;
+}
+.ov-cap b,
+.ov-cap strong { font-weight: 600; font-style: normal; }
+
+/* 画像の薄化はやめる */
+@media (hover:hover) and (pointer:fine) {
+  .justified-grid.is-group-hover a.is-in-group img {
+    opacity: 1;
+  }
+}
+
+/* サムネ全体に“薄い白”を重ねる（赤が透けない） */
+@media (hover:hover) and (pointer:fine) {
+  .justified-grid.is-group-hover a.is-in-group::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.542);
+    pointer-events: none;
+    z-index: 1; /* ← オーバーレイは下層 */
+  }
+}
+
+/* ヘッドだけキャプションを表示し、必ず最前面に */
+@media (hover:hover) and (pointer:fine) {
+  .justified-grid.is-group-hover a[data-head="1"].is-in-group .ov-cap {
+    opacity: 1;
+    z-index: 2; /* ← オーバーレイより前 */
+  }
+}
+
+/* ============ Custom Gallery (Lightbox) ============ */
+.gm[aria-hidden="true"] { display: none; }
+.gm {
+  position: fixed; inset: 0; z-index: 9999;
+  display: grid; place-items: center;
+}
+.gm-backdrop {
+  position: absolute; inset: 0;
+  border: 0; padding: 0; margin: 0; background: #d20606;
+}
+.gm-frame {
+  position: relative;
+  width: 90vw;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 767px) {
+  .gm-frame {
+    position: relative;
+    top: -20px !important;   /* ← 上に20px移動 */
+    width: 85vw;
+    height: 70vh;
+  }
+}
+
+.gm-frame img {
+  display:block;
+  opacity:0;
+  transition: opacity .15s ease;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ===== カスタムギャラリー内 各要素配置 ===== */
+/* --- gm-caption 上部に名前と肩書き --- */
+.gm-name {
+  margin-bottom: 2px; /* 下との余白 */
+}
+
+.gm-name .gm-main {
+  font-weight: 700;
+  font-size: .9rem;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  margin: 0;
+  color: #000000;
+}
+
+.gm-name .gm-subtitle {
+  font-weight: 700;
+  font-size: .7rem;
+  letter-spacing: 0.04em;
+  margin: 0;
+  color: #000000;
+  
+}
+
+/* キャプション（左下寄せ） */
+.gm-caption {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  color: #000000;
+  pointer-events: none;
+  text-align: left;
+}
+
+.gm-ttl {
+  margin: 0;
+  font-weight: 500;
+  font-size: .7rem;
+}
+
+.gm-sub {
+  margin: 0;
+  font-weight: 500;
+  font-size: .7rem;
+}
+
+/* カウンター（右下） */
+.gm-counter {
+  position: absolute;
+  right: 15px;
+  bottom: 35px;
+  color: #000000;
+  font-weight: 800;
+  font-size: .8rem;
+  letter-spacing: .04em;
+}
+
+/* クローズボタン（カウンターの下） */
+.gm-close {
+  position: absolute;
+  right: 10px;
+  bottom: 10px; /* カウンターの上に被らないよう調整 */
+  border: 0;
+  background: transparent;
+  color: #000000;
+  font-size: .9rem;
+  font-weight: 800;
+  text-align: center;
+  z-index: 10;
+}
+
+/* Click zones */
+.gm-hit {
+  position: absolute; top: 0; bottom: 0; width: 50vw; height: 100vh;
+  border: 0; background: transparent; cursor: ew-resize;
+}
+.gm-prev { left: 0; }
+.gm-next { right: 0; }
+
+
+.gm-frame img.ready{opacity:1;}
+
+/* ==== iPhoneでのタップ時ハイライト防止 ==== */
+.gm-hit,
+.gm-close,
+.gm-backdrop {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ==== クリックゾーンを透明に維持 ==== */
+/* (already defined above) */
+
+
+/* second :root removed (variables merged at top) */
+
+/* === スマホ縦向き時のみ 下に10pxの余白を追加 === */
+@media (orientation: portrait) and (max-width: 820px) {
+ .gm-caption, .gm-close {
+    padding-bottom: 15px !important;
+  }
+  
+  .gm-counter {
+    padding-bottom :10px !important;
+  }
+  
+}
+
+/* === デフォルトではスクロール可能に戻す === */
+html, body {
+  overscroll-behavior: auto;
+  touch-action: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* === ギャラリーモーダル(.gm)が開いている時だけスクロール禁止 === */
+.gm[aria-hidden="false"] {
+  position: fixed;                 /* 背景を固定して動かさない */
+  inset: 0;
+  overflow: hidden !important;     /* スクロールを封じる */
+  overscroll-behavior: contain !important;
+  touch-action: none !important;
+  -webkit-overflow-scrolling: auto !important;
+}
+
+/* モーダル内の frame/caption の揺れも封じる */
+.gm-frame,
+.gm-caption {
+  overscroll-behavior: contain !important;
+  touch-action: none !important;
+  -webkit-overflow-scrolling: auto !important;
+}
+
+
+
+
+/* === Mobile: 1st tap shows caption & group dim === */
+@media (hover: none) and (pointer: coarse) {
+  /* 1回目タップで付く .tap-armed のときだけキャプション表示 */
+  #overviewGrid a.tap-armed .ov-cap {
+    opacity: 1;
+  }
+
+  /* グループ強調：is-group-tap + is-in-group は JS 側で付与 */
+  #overviewGrid.is-group-tap a.jg-entry {
+    transition: opacity .15s ease;
+  }
+  #overviewGrid.is-group-tap a.jg-entry:not(.is-in-group) {
+    opacity: .35;
+  }
+}
+
+/* === Desktop hover: サムネにホバーしたらキャプション表示 === */
+@media (hover: hover) and (pointer: fine) {
+  #overviewGrid a.jg-entry:hover .ov-cap {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+
+
+
+
+
