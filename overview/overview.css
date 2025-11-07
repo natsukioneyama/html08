@@ -291,16 +291,17 @@ html, body {
 
 /* === Mobile: 1st tap shows caption & group dim === */
 @media (hover: none) and (pointer: coarse) {
-  /* 1回目タップで付く .tap-armed のときだけキャプション表示 */
   #overviewGrid a.tap-armed .ov-cap {
     opacity: 1;
   }
 
   /* グループ強調：is-group-tap + is-in-group は JS 側で付与 */
-  #overviewGrid.is-group-tap a.jg-entry {
+  #overviewGrid.is-group-tap .jg-entry {
     transition: opacity .15s ease;
   }
-  #overviewGrid.is-group-tap a.jg-entry:not(.is-in-group) {
+
+  /* ★ここを変更：同じグループだけ半透明にする */
+  #overviewGrid.is-group-tap .jg-entry.is-in-group {
     opacity: .35;
   }
 }
