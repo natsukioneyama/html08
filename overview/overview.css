@@ -317,6 +317,16 @@ html, body {
     transform: translateY(0);
   }
 }
+@media (hover:hover) and (pointer:fine) {
+  #overviewGrid.is-group-tap .jg-entry a.is-in-group::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.542);
+    pointer-events: none;
+    z-index: 1; /* ← オーバーレイは下層 */
+  }
+}
 
 
 
