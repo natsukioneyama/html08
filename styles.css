@@ -117,7 +117,7 @@ a.icon {
 
 .icon .label {
   font-size: 13px;
-  color: #000000;
+  color: white;
   opacity: 0.9;
 }
 a.icon { display: inline-flex; } /* button.icon と見た目の差を最小化したい場合 */
