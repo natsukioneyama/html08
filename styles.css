@@ -60,7 +60,7 @@ a.icon {
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background:transparent;
+  background: #d20606;
   padding: 10px;
   z-index: 1;
 }
