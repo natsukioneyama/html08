@@ -1049,7 +1049,13 @@ window.addEventListener('keydown', e => {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeSV();
   });
-  sv.addEventListener('click', () => closeSV());
+  sv.addEventListener('click', (e) => {
+  // sv 自身（背景）をクリックしたときだけ閉じる
+  if (e.target === sv) {
+    closeSV();
+  }
+});
+
 
   function closeSV() {
     sv.classList.remove('open');
