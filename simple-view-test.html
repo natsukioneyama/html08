@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Simple Viewer Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="sv-test.css" />
+</head>
+<body>
+
+  <div class="desktop" id="desktop">
+    <!-- テスト用アイコンたち -->
+    <button class="icon" data-type="simple-view" data-src="video/v01.mp4">
+      video test
+    </button>
+
+    <button class="icon" data-type="simple-view" data-src="icons/05.webp">
+      image test
+    </button>
+  </div>
+
+  <!-- simple-viewer 本体（常に DOM に存在させる） -->
+  <div id="simple-viewer">
+    <div class="sv-inner">
+      <!-- 動画ビュー -->
+      <div class="sv-video">
+        <video class="sv-video__tag" playsinline muted></video>
+        <div class="sv-video__controls">
+          <div class="sv-progress">
+            <div class="sv-progress__bar"></div>
+          </div>
+          <div class="sv-nav">
+            <button type="button" class="sv-btn sv-btn--play">PAUSE</button>
+            <button type="button" class="sv-btn sv-btn--fs">FULL</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 画像ビュー -->
+      <img class="simple-viewer__img" alt="" />
+
+      <!-- テキストビュー -->
+      <div class="simple-viewer__text"></div>
+    </div>
+  </div>
+
+  <script src="sv-test.js"></script>
+</body>
+</html>
